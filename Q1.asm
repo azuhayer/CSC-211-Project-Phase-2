@@ -1,13 +1,13 @@
 .data
-A:      .word 1, 2, 3, -4, 5    # Array A
-sum:    .word 0                 # Sum variable
+A:      .word 1, 2, 3, -4, 5    # Initialize array A
+sum:    .word 0                 # Initialize sum variable
 
 .text
 .globl main
 
 main:
     # Initialize variables
-    li $t0, 0                       # $t0 = i (loop counter)
+    addi $t0, 0                     # $t0 = i (loop counter)
     la $t1, A                       # $t1 = address of A
     la $t2, sum                     # $t2 = sum
 
@@ -15,18 +15,18 @@ main:
 print_A_loop:
     beq $t0, 5, summation_3_call    # if i == 5, jump to summation_3_call
     lw $a0, ($t1)                   # load A[i] into $a0
-    li $v0, 1                       # syscall code for printing an integer
+    addi $v0, 1                     # syscall code for printing an integer
     syscall
-    li $v0, 4                       # syscall code for printing a string
+    addi $v0, 4                     # syscall code for printing a string
     la $a0, newline                 # load address of newline into $a0
-    syscall                         #performs system call to exit program
+    syscall                         
     addi $t0, $t0, 1                # i++
     addi $t1, $t1, 4                # iterate pointer to next element of A
     j print_A_loop                  # repeat loop
 
 summation_3_call:
     # Reset the loop counter and array pointer
-    li $t0, 0                       # $t0 = i (loop counter)
+    addi $t0, 0                     # $t0 = i (loop counter)
     la $t1, A                       # $t1 = address of A
 
 summation_3_loop:
@@ -43,18 +43,18 @@ summation_3_loop:
 
 print_updated_A:
     # Reset loop counter and array pointer
-    li $t0, 0                       # $t0 = i (loop counter)
+    addi $t0, 0                     # $t0 = i (loop counter)
     la $t1, A                       # $t1 = address of A
 
     # Print updated array A
 print_updated_A_loop:
     beq $t0, 5, print_sum           # if i == 5, jump to print_sum
     lw $a0, ($t1)                   # load A[i] into $a0
-    li $v0, 1                       # syscall code for printing an integer
-    syscall                         # performs system call to exit program
-    li $v0, 4                       # syscall code for printing a string
+    addi $v0, 1                     # syscall code for printing an integer
+    syscall                         
+    addi $v0, 4                     # syscall code for printing a string
     la $a0, newline                 # load address of newline into $a0
-    syscall                         # performs system call to exit program
+    syscall                         
     addi $t0, $t0, 1                # i++
     addi $t1, $t1, 4                # advance pointer to next element of A
     j print_updated_A_loop          # repeat loop
@@ -62,12 +62,12 @@ print_updated_A_loop:
 print_sum:
     # Print sum
     la $a0, sum                     # load sum into $a0
-    li $v0, 1                       # syscall code for printing an integer
+    addi $v0, 1                     # syscall code for printing an integer
     syscall                         # performs system call to exit program
-    li $v0, 4                       # syscall code for printing a string
+    addi $v0, 4                     # syscall code for printing a string
     la $a0, newline                 # load address of newline into $a0
     syscall
 
     # Exit program
-    li $v0, 10                      # peforms system call to exit program
+    addi $v0, 10                      # peforms system call to exit program
     syscall
